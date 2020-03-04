@@ -31,14 +31,13 @@ defmodule Autoalias do
   defp get_conflicts(target, modules) do
     conflicts =
       modules
-      |> Enum.map(fn module ->
-        conflicts = if module != target and last_child(module) == last_child(target) do
-          module
+      |> Enum.reduce({}, fn module, conflicts ->
+        if module != target and last_child(module) == last_child(target) do
+          Tuple.append(conflicts, module)
         else
-          nil
+          conflicts
         end
       end)
-      |> Enum.reject(&is_nil/1)
 
     [target: target, conflicts: conflicts]
   end
