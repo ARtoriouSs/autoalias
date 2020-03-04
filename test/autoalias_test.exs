@@ -2,7 +2,7 @@ defmodule AutoaliasTest do
   use ExUnit.Case
   doctest Autoalias
 
-  test "greets the world" do
-    assert Autoalias.hello() == :world
+  test "pending" do
+    assert true
   end
 end
