@@ -22,8 +22,7 @@ defmodule Autoalias do
     keks =
       modules
       |> Enum.map(fn module -> get_conflicts(module, modules) end)
-      |> Enum.dedup_by(fn [target: target, conflicts: _] -> last_child(target) end)
-      #|> Enum.reject(fn module -> duplicate?(module, modules) end)
+      |> Enum.dedup_by(fn %{target: target} -> last_child(target) end)
 
           require IEx; IEx.pry
       # TODO:
@@ -34,15 +33,15 @@ defmodule Autoalias do
 
   defp get_conflicts(target, modules) do
     conflicts =
-      modules |> Enum.reduce({}, fn module, conflicts ->
+      modules |> Enum.reduce([], fn module, conflicts ->
         if module != target and last_child(module) == last_child(target) do
-          Tuple.append(conflicts, module)
+          conflicts ++ [module]
         else
           conflicts
         end
       end)
 
-    [target: target, conflicts: conflicts]
+    %{target: target, conflicts: conflicts}
   end
 
   defp last_child(module) do
