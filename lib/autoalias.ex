@@ -23,11 +23,16 @@ defmodule Autoalias do
       modules
       |> Enum.map(fn module -> get_conflicts(module, modules) end)
       |> Enum.dedup_by(fn %{target: target} -> last_child(target) end)
+      |> Enum.map(fn %{conflicts: conflicts} -> conflicts end)
+      |> List.flatten
+      |> Enum.reduce(modules, fn module, modules ->
+        modules
+        |> List.delete(module)
+        |> List.insert_at(-1, parent(module))
+      end)
 
           require IEx; IEx.pry
-      # TODO:
-      # resolve and build new modules list
-      # repeat if has conflicts
+      # TODO: repeat if has conflicts
 
   end
 
@@ -44,11 +49,17 @@ defmodule Autoalias do
     %{target: target, conflicts: conflicts}
   end
 
-  defp last_child(module) do
+  def last_child(module) do
     module
-    |> Atom.to_string
-    |> String.split(".")
-    |> Enum.take(-1)
+    |> Module.split
+    |> List.last
+  end
+
+  def parent(module) do
+    module
+    |> Module.split
+    |> Enum.drop(-1)
+    |> Module.concat
   end
 
   defp quote_alias(module) do
