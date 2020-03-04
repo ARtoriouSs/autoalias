@@ -5,8 +5,8 @@ defmodule Autoalias do
 
   @doc "TODO"
   defmacro __using__(_args) do
-    #:code.all_loaded
-    [{Foo.Bar.Keks, 'asd'}, {Lel.Keks, ''}]
+    :code.all_loaded
+    #[{Lel.Keks, ''}, {Foo.Bar.Keks, ''}, {Pop.Aaa, ''}]
     |> Enum.map(fn {module, _path} -> module end)
     |> Enum.filter(&elixir_module?/1)
     |> resolve_conflicts
@@ -19,8 +19,9 @@ defmodule Autoalias do
   end
 
   defp resolve_conflicts(modules) do
-    keks =
+    resolved =
       modules
+      |> Enum.sort(fn first, second -> submodules_count(first) <= submodules_count(second) end)
       |> Enum.map(fn module -> get_conflicts(module, modules) end)
       |> Enum.dedup_by(fn %{target: target} -> last_child(target) end)
       |> Enum.map(fn %{conflicts: conflicts} -> conflicts end)
@@ -31,9 +32,12 @@ defmodule Autoalias do
         |> List.insert_at(-1, parent(module))
       end)
 
-          require IEx; IEx.pry
-      # TODO: repeat if has conflicts
+    if has_conflicts?(resolved), do: resolve_conflicts(resolved), else: resolved
+  end
 
+  defp submodules_count(Elixir), do: 0
+  defp submodules_count(module) do
+    module |> Module.split |> Enum.count
   end
 
   defp get_conflicts(target, modules) do
@@ -49,7 +53,17 @@ defmodule Autoalias do
     %{target: target, conflicts: conflicts}
   end
 
-  def last_child(module) do
+  defp has_conflicts?(modules) do
+    modules |> Enum.any?(fn module ->
+      module
+      |> get_conflicts(modules)
+      |> Map.get(:conflicts)
+      |> Enum.any?
+    end)
+  end
+
+  defp last_child(Elixir), do: Elixir
+  defp last_child(module) do
     module
     |> Module.split
     |> List.last
