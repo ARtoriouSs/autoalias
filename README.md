@@ -72,3 +72,8 @@ module. If this happened, you can prepend module with `Elixir.` prefix, like `El
 `Elixir` module itself cannot be aliased at all.
 
 This cases are pretty rare, but it can happen.
+
+## Contributing
+
+If there is any problems or suggestions, you can always open [issue](https://github.com/ARtoriouSs/autoalias/issues)
+or [pull request](https://github.com/ARtoriouSs/autoalias/pulls).
