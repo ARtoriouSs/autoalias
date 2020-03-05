@@ -11,7 +11,7 @@ your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:autoalias, "~> 0.1.0", only: :dev}
+    {:autoalias, "~> 0.2.0", only: :dev}
   ]
 end
 ```

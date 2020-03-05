@@ -4,7 +4,7 @@ defmodule Autoalias.MixProject do
   def project do
     [
       app: :autoalias,
-      version: "0.1.0",
+      version: "0.2.0",
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -23,19 +23,15 @@ defmodule Autoalias.MixProject do
   end
 
   defp description do
-    """
-    TODO
-    """
+    "Alias all your modules in iex shell with a single command!"
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger]
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
