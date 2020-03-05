@@ -53,8 +53,8 @@ Check out the [docs](https://hexdocs.pm/autoalias) for more info.
 ### Conflicts
 
 If we have several modules with the same ending and alias all of them, only last one will be accepted.
-For this lib it will be the longest accessible module with particular ending,
-all others will be aliased by their parents.
+For this lib it will be the longest accessible module with particular ending, all others will be aliased
+by their parents. Conflicts solving performs recursively till there will be no conflict at all.
 
 For example if there is modules like `Foo.Bar.Module` and `Baz.Qux.Corge.Module` it will alias the longest module,
 and closest parent for all conflicted modules. In this case it will be:

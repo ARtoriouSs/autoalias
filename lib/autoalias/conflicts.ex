@@ -5,6 +5,7 @@ defmodule Autoalias.Conflicts do
 
   @doc """
   Accepts list of modules and returns list of modules with resolved conflicts.
+  Conflicts solving performs recursively till there will be no conflicts at all.
 
   If we have several modules with the same ending and alias all of them, only last one will be accepted.
   For example if there is modules like `Foo.Bar.Module` and `Baz.Qux.Corge.Module` it will alias the longest module,
