@@ -6,7 +6,6 @@ defmodule Autoalias do
   @doc "TODO"
   defmacro __using__(_args) do
     :code.all_loaded()
-    # [{Lel.Keks, ''}, {Foo.Bar.Keks, ''}, {Pop.Aaa, ''}]
     |> Enum.map(fn {module, _path} -> module end)
     |> Enum.filter(&elixir_module?/1)
     |> resolve_conflicts
