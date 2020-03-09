@@ -3,6 +3,8 @@
 Find yourself typing long module names when debugging something in iex?
 Or creating aliases for lots of modules just to test simple query? This library can help you!
 
+_NOTE:_ you'll probably want to use `.iex.exs` file instead in most cases.
+
 ## Installation
 
 Available via [Hex package](https://hex.pm/packages/autoalias), just add `autoalias` to
