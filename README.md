@@ -1,5 +1,7 @@
 # Autoalias
 
+[![Hex Version](https://img.shields.io/hexpm/v/autoalias.svg)](https://hex.pm/packages/autoalias)
+
 Find yourself typing long module names when debugging something in iex?
 Or creating aliases for lots of modules just to test simple query? This library can help you!
 
